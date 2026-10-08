@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Study Buddy</title>
+  <meta name="description" content="An AI political economy tutor with an interactive visual whiteboard.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23b4532a'/%3E%3Ctext x='16' y='23' font-size='20' text-anchor='middle' fill='white' font-family='Georgia'%3E§%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">§</span>
+      <div>
+        <h1>Study Buddy</h1>
+        <p class="brand-sub">Political economy, one idea at a time</p>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <button class="btn ghost" id="theme-btn" title="Toggle light/dark" aria-label="Toggle theme">◐</button>
+      <button class="btn ghost" id="new-lesson-btn">New lesson</button>
+      <button class="btn ghost" id="settings-btn" aria-label="Settings" title="Settings">⚙</button>
+    </div>
+  </header>
+
+  <nav class="pane-tabs" role="tablist" aria-label="Panes">
+    <button role="tab" class="pane-tab active" data-pane="chat" aria-selected="true">Chat</button>
+    <button role="tab" class="pane-tab" data-pane="stage" aria-selected="false">Whiteboard <span class="tab-badge" id="stage-badge" hidden></span></button>
+  </nav>
+
+  <main class="layout">
+    <section class="chat pane active" id="chat-pane" aria-label="Chat with your teacher">
+      <div class="messages" id="messages" aria-live="polite"></div>
+      <form class="composer" id="composer">
+        <div class="visual-note" id="visual-note" hidden>
+          <span>📎 Your whiteboard changes will be shared with the teacher</span>
+          <button type="button" class="link-btn" id="visual-note-clear">don't share</button>
+        </div>
+        <div class="composer-row">
+          <textarea id="input" rows="1" placeholder="Ask Professor Mill anything…" aria-label="Message"></textarea>
+          <button class="btn primary send" id="send-btn" type="submit" aria-label="Send">↑</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="stage pane" id="stage-pane" aria-label="Whiteboard">
+      <div class="stage-head">
+        <div>
+          <p class="eyebrow" id="stage-eyebrow">Whiteboard</p>
+          <h2 id="stage-title">Nothing drawn yet</h2>
+          <p class="stage-caption" id="stage-caption">When your teacher wants to show you something, it appears here. You can drag, slide and click everything.</p>
+        </div>
+        <div class="stage-actions" id="stage-actions" hidden>
+          <button class="btn ghost small" id="stage-reset">Reset</button>
+          <button class="btn accent small" id="stage-ask">Ask about this</button>
+        </div>
+      </div>
+      <div class="stage-body" id="stage-body">
+        <div class="stage-empty">
+          <svg viewBox="0 0 200 120" aria-hidden="true" class="empty-art">
+            <path d="M20 100 L20 15 M20 100 L185 100" />
+            <path class="d" d="M30 25 C 80 45, 120 75, 175 92" />
+            <path class="s" d="M30 92 C 80 75, 120 45, 175 25" />
+            <circle cx="102" cy="58" r="5" />
+          </svg>
+        </div>
+      </div>
+      <div class="filmstrip" id="filmstrip" aria-label="Earlier visuals"></div>
+    </section>
+  </main>
+
+  <dialog id="settings" class="modal">
+    <form method="dialog" id="settings-form">
+      <h2>Settings</h2>
+      <label class="field">
+        <span>Anthropic API key</span>
+        <input type="password" id="api-key" autocomplete="off" spellcheck="false" placeholder="sk-ant-…">
+      </label>
+      <p class="hint">Your key is stored only in this browser (localStorage) and sent directly to Anthropic's API. Don't use this on a shared computer. Get a key at console.anthropic.com.</p>
+      <label class="field">
+        <span>Teacher model</span>
+        <select id="model">
+          <option value="claude-opus-5-5">Claude Opus 5.5 (best teacher)</option>
+          <option value="claude-sonnet-5-5">Claude Sonnet 5.5 (faster, cheaper)</option>
+          <option value="claude-haiku-5-5">Claude Haiku 5.5 (fastest, cheapest)</option>
+        </select>
+      </label>
+      <div class="modal-actions">
+        <button type="button" class="btn ghost" id="clear-key">Clear key</button>
+        <span class="spacer"></span>
+        <button value="cancel" class="btn ghost" formnovalidate>Cancel</button>
+        <button value="save" class="btn primary" id="save-settings">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
